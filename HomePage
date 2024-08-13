@@ -1,0 +1,65 @@
+import geb.navigator.Navigator
+import geb.waiting.WaitTimeOutException
+
+class HomePage extends CustomLocator{
+
+static at = {
+waitFor("slow")   {$("[ng-model='searchValue']").displayed}
+  }
+
+static content = {
+
+searchOption     {$("[ng-model='searchValue']")}
+btnAddUser       {$('[ng-show="isGlobalSearchActivated"] [ng-click="pop()"]')}
+txtFirstName     {$('[name="FirstName"]')}
+txtLastName      {$('[name="LastName"]')}
+txtUserName      {$('[name="UserName"]')}
+txtPasswordField {$('[name="Password"]')}
+customerLbl      {$('label.radio')}
+roleDrpDwn       {$('[name="RoleId"]')}
+txtEmail         {$('[name="Email"]')}
+txtCellPhone     {$('[name="Mobilephone"]')}
+footerBtns       {$('div.modal-footer')}
+tblUsers         {$("[table-title='Smart Table example']")}
+
+}
+
+//Method for verifying page is loaded or not
+
+def verifyHomePageLoadedSuccessfully(){
+return waitFor("slow"){this.searchOption.displayed}
+}
+
+//Method to add new user to the table
+
+def addNewUserToTable(String firstName,String lastName , String userName,String passValue, String customerType,String roleName,String emailTxt,String mobileNumValue,String btnName){
+waitFor("slow")  {btnAddUser.click()}
+waitFor("slow")  {txtFirstName.value(firstName)}
+waitFor("slow")  {txtLastName.value(lastName)}
+waitFor("slow")  {txtUserName.value(userName)}
+waitFor("slow")  {txtPasswordField.value(passValue)}
+waitFor("slow")  {customerLbl.filter(text:contains(customerType)).find("input").click()}
+waitFor("slow")  {roleDrpDwn.find("option",text:(roleName)).click()}
+waitFor("slow")  {txtEmail.value(emailTxt)}
+waitFor("slow")  {txtCellPhone.value(mobileNumValue)}
+waitFor("slow")  {footerBtns.find("button",text:(btnName)).click()}
+}
+
+// Method to verify entry is present in the table
+
+def verifySpecificUserIsDisplayed(String firstName, String lastName , String userName){
+return tblUsers.find("tr td",text:(firstName)).next("td",text:(lastName)).next("td",text:(userName)).displayed
+}
+
+//Method to delete the user
+
+def deleteUserFromTable(String userName){
+waitFor("slow")  {tblUsers.find("tr td",text:(userName))}
+waitFor("slow")  {tblUsers.find("tr td",text:(userName)).parent("tr").find("i.icon-remove").click()}
+}
+
+//Method to click on specific btn on popup
+
+def clickOnSpecificBtnOnPopup(String btnName){
+waitFor("slow")  {footerBtns.find("button",text:(btnName)).click()}
+}
