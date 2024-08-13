@@ -1,0 +1,31 @@
+class LoginSpec {
+
+
+def setupSpec(){
+  WebDriver driver
+  Browser browser
+  def browserConfig = [
+driver : {new org.openqa.selenium.ChromeDriver()},
+baseUrl : "https://www.way2automation.com/angularjs-protractor/webtables/",
+reportsDir : new File("build/reports/geb")
+]
+
+   browser= new Browser(browserConfig)
+
+  }
+
+//This method is used to hit the URL
+def setupSpec(){
+given:"Need to open the url"
+when:"Fire Login Url"
+      browser.go "/"
+then:"It should be redirected to the homepage"
+      HomePage homePage = at HomePage
+   }
+
+
+def setup(){
+   homePage.hardRefresh()
+  }
+
+}
