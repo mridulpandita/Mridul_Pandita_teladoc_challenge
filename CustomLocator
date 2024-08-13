@@ -1,0 +1,40 @@
+import geb.Page
+class CustomLocator extend Page{
+
+static content = {
+
+searchUsername              {$("[ng-model='searchValue']")}
+
+}
+
+def closeBrowserAlert(){
+
+try{
+driver.switchTo().alert().accept()
+}
+catch(Exception e){
+return true
+  }
+return true
+}
+
+def checkHomePageLoaded(){
+try{
+js.executeScript(driver.findElement(By.cssSelector("[ng-model='searchValue']")),"argument[0].scrollIntoView())"
+searchUsername.click()
+}
+catch(ElementClickInterceptedException | Exception e){
+return false
+  }
+return true
+}
+
+
+def hardRefresh(){
+closeBrowserAlert()
+if(!checkHomePageLoaded()){
+driver.navigate().refresh()
+  }
+}
+
+}
