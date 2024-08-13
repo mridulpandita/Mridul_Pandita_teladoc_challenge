@@ -6,7 +6,7 @@
 //And all the page methods have been declared in HomePage,and homepage extends customlocator class which contain methods that are not specific to any page.
 
 ---
-For groovy and spoc framework best build tool is gradle which it is groovy based DSL
+For groovy and spock framework best build tool is gradle which it is groovy based DSL
 So command to run the test cases:
 gradle test --tests TestingWebtableSpec
 
