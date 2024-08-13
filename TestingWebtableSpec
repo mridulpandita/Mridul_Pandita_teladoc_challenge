@@ -1,0 +1,42 @@
+class TestingWebtableSpec extends LoginSpec{
+
+
+def "Add a user and validate the user has been added to the table"(){
+given:"Hit the URl and page will be opened"
+       HomePage homePage = at HomePage
+when:"Add the user"
+       homePage.addNewUserToTable(firstName,lastName,userName,password,customer,role,email,mobileNo,"Save")
+then:"User has been successfully added"
+       homePage.verifySpecificUserIsDisplayed(firstName,lastName,userName)
+cleanup:"refreshing the screen"
+       homePage.hardRefresh()
+where:"test data"
+        firstName  << ["mridul"]
+        lastName  << ["pandita"]
+        userName << ["mridulp"]
+        password << ["Mridul1995p"]
+        role << ["Sales Team"]
+        customer << ["Company AAA"]
+        email << [mridulpandita95@gmail.com]
+        mobileNo << ["7021482487"]
+       }
+
+
+def "Delete the user "novak" from the table and validate the user has been deleted"(){
+given:"Hit the URl and page will be opened"
+       HomePage homePage = at HomePage
+when:"Delete the user"
+       homePage.deleteUserFromTable(userName)
+       homePage.clickOnSpecificBtnOnPopup("OK")
+then:"User has been successfully deleted"
+       !homePage.verifySpecificUserIsDisplayed(firstName,lastName,userName)
+cleanup:"refreshing the screen"
+       homePage.hardRefresh()
+where:"test data"
+        firstName  << ["Mark"]
+        lastName  << ["Novak"]
+        userName << ["novak"]
+        
+       }
+
+}
